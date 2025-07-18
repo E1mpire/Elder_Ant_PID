@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"G:\IAR\common\bin\cspybat" -f "E:\STProject\HUAWEI_PWM\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.general.xcl" --backend -f "E:\STProject\HUAWEI_PWM\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.driver.xcl" 
+"G:\IAR\common\bin\cspybat" -f "E:\STProject\Elder_Ant_PID\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.general.xcl" --backend -f "E:\STProject\Elder_Ant_PID\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"G:\IAR\common\bin\cspybat" -f "E:\STProject\HUAWEI_PWM\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.general.xcl" "--debug_file=%~1" --backend -f "E:\STProject\HUAWEI_PWM\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.driver.xcl" 
+"G:\IAR\common\bin\cspybat" -f "E:\STProject\Elder_Ant_PID\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.general.xcl" "--debug_file=%~1" --backend -f "E:\STProject\Elder_Ant_PID\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.driver.xcl" 
 
 @echo off 
 :end

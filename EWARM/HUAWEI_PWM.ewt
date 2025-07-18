@@ -1439,9 +1439,6 @@
                     <name>$PROJ_DIR$\..\Core\Src\gpio.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\Core\Src\i2c.c</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\Core\Src\main.c</name>
                     <configuration>
                         <name>HUAWEI_PWM</name>
@@ -1468,6 +1465,12 @@
             <name>bsp</name>
             <file>
                 <name>$PROJ_DIR$\..\Drivers\bsp\src\AS5600.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Drivers\bsp\src\Delay.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Drivers\bsp\src\i2c.c</name>
             </file>
         </group>
         <group>
@@ -1501,12 +1504,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_gpio.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_i2c.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_i2c_ex.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_hal_pwr.c</name>

@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "G:\IAR\common\bin\cspybat" -f "E:\STProject\HUAWEI_PWM\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.general.xcl" --backend -f "E:\STProject\HUAWEI_PWM\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.driver.xcl" 
+& "G:\IAR\common\bin\cspybat" -f "E:\STProject\Elder_Ant_PID\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.general.xcl" --backend -f "E:\STProject\Elder_Ant_PID\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.driver.xcl" 
 }
 else
 {
-& "G:\IAR\common\bin\cspybat" -f "E:\STProject\HUAWEI_PWM\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.general.xcl" --debug_file=$debugfile --backend -f "E:\STProject\HUAWEI_PWM\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.driver.xcl" 
+& "G:\IAR\common\bin\cspybat" -f "E:\STProject\Elder_Ant_PID\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.general.xcl" --debug_file=$debugfile --backend -f "E:\STProject\Elder_Ant_PID\EWARM\settings\HUAWEI_PWM.HUAWEI_PWM.driver.xcl" 
 }

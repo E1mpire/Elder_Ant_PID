@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -47,7 +46,7 @@
 
 /* USER CODE BEGIN PV */
 uint8_t PID_Flag = 0;
-uint16_t Raw_Angle;
+int Raw_Angle;
 char PID_String[1024] = {0};
 char buffer[256] = {0};
 /* USER CODE END PV */
@@ -94,7 +93,6 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM1_Init();
   MX_TIM3_Init();
-  MX_I2C1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
@@ -110,6 +108,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    /*
     if (HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13) == GPIO_PIN_RESET)
     {
       HAL_Delay(10);
@@ -128,15 +127,19 @@ int main(void)
          }
        }
     }
-    if (PID_Flag)
-    {
-        PID_Flag = 0;
-        Raw_Angle = AS5600_ReadAngle();
+*/
+
+        Raw_Angle = AS5600_IIC_Read_OneByte((0x36<<1),0x0e);
+        		    
+        Raw_Angle <<= 8;
+        Raw_Angle |= AS5600_IIC_Read_OneByte((0x36<<1),0x0f); 
+
+                 
         float deg = Raw_Angle / 4095.0f * 360.0f;
         int len = sprintf(buffer,"PID:%f\n",deg);
         
         HAL_UART_Transmit(&huart1,(uint8_t*)buffer,len,4095);
-    }
+    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -59,6 +59,12 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define Key_Pin GPIO_PIN_13
 #define Key_GPIO_Port GPIOC
+#define IIC_SDA_Pin GPIO_PIN_8
+#define IIC_SDA_GPIO_Port GPIOA
+#define IIC_SCL_Pin GPIO_PIN_9
+#define IIC_SCL_GPIO_Port GPIOA
+#define DIR_Pin GPIO_PIN_8
+#define DIR_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 

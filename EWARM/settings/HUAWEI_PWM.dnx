@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <settings>
     <StLinkDriver>
-        <stlinkserialNo>0671FF495257808667012830</stlinkserialNo>
+        <stlinkserialNo>E1007200D0D2139393740544</stlinkserialNo>
         <stlinkfoundProbes />
         <stlinkResetStyle>0</stlinkResetStyle>
         <stlinkResetStrategy>2</stlinkResetStrategy>
@@ -36,7 +36,7 @@
         <EnforceMemoryConfiguration>1</EnforceMemoryConfiguration>
     </ArmDriver>
     <DebugChecksum>
-        <Checksum>2996407390</Checksum>
+        <Checksum>3048518908</Checksum>
     </DebugChecksum>
     <Disassembly>
         <MixedMode>1</MixedMode>
