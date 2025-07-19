@@ -9,55 +9,56 @@
   ******************************************************************************
   */														
 	
-#include "i2c.h"
+#include "ch_lib_i2c.h"
 #include "Delay.h"
 
 void GPIO_MODE_SET(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, uint32_t Mode)
 {
+    HAL_GPIO_WritePin(GPIOx, GPIO_Pin, GPIO_PIN_SET);
+
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     GPIO_InitStruct.Pin = GPIO_Pin;
     GPIO_InitStruct.Mode = Mode;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
 }
-
- /**
- * @brief   		产生IIC起始信号
+/**
+ * @brief   		2úéúIIC?eê?D?o?
  */
 void IIC_Start(void)
 {
-	SDA_OUT;     																																					//sda线输出
+	SDA_OUT;     																																					//sda??ê?3?
 	IIC_SDA_H;	  	  
 	IIC_SCL_H;
 	Delay_us(4);
  	IIC_SDA_L;																																							//START:when CLK is high,DATA change form high to low 
 	Delay_us(4);
-	IIC_SCL_L;																																							//钳住I2C总线，准备发送或接收数据 
+	IIC_SCL_L;																																							//?ˉ×?I2C×ü??￡?×?±?·￠?í?ò?óê?êy?Y 
 }	  
 
 /**
- * @brief   		产生IIC停止信号
+ * @brief   		2úéúIICí￡?1D?o?
  */
 void IIC_Stop(void)
 {
-	SDA_OUT;																																							//sda线输出
+	SDA_OUT;																																							//sda??ê?3?
 	IIC_SCL_L;
 	IIC_SDA_L;																																							//STOP:when CLK is high DATA change form low to high
 	Delay_us(4);
 	IIC_SCL_H; 
-	IIC_SDA_H;																																							//发送I2C总线结束信号
+	IIC_SDA_H;																																							//·￠?íI2C×ü???áê?D?o?
 	Delay_us(4);
 }
 
 /**
- * @brief    		等待应答信号到来
- * @return			返回值：1，接收应答失败     0，接收应答成功
+ * @brief    		μè′yó|′eD?o?μ?à′
+ * @return			·μ???μ￡o1￡??óê?ó|′eê§°ü     0￡??óê?ó|′e3é1|
  */
-uint8_t IIC_Wait_Ack(void)
+u8 IIC_Wait_Ack(void)
 {
-	uint8_t ucErrTime=0;
-	SDA_IN;      																																				//SDA设置为输入  
+	u8 ucErrTime=0;
+	SDA_IN;      																																				//SDAéè???aê?è?  
 	IIC_SDA_H;
 	Delay_us(1);
 	IIC_SCL_H;
@@ -71,48 +72,48 @@ uint8_t IIC_Wait_Ack(void)
 			return 1;
 		}
 	}
-	IIC_SCL_L;																																					//时钟输出0 	   
+	IIC_SCL_L;																																					//ê±?óê?3?0 	   
 	return 0;  
 } 
 
 /**
- * @brief    		产生ACK应答
+ * @brief    		2úéúACKó|′e
  */
 void IIC_Ack(void)
 {
 	IIC_SCL_L;
 	SDA_OUT;
 	IIC_SDA_L;
-	Delay_us(5);
+	Delay_us(2);
 	IIC_SCL_H;
-	Delay_us(5);
+	Delay_us(2);
 	IIC_SCL_L;
 }
 
 /**
- * @brief    		不产生ACK应答
+ * @brief    		2?2úéúACKó|′e
  */
 void IIC_NAck(void)
 {
 	IIC_SCL_L;
 	SDA_OUT;
 	IIC_SDA_H;
-	Delay_us(5);
+	Delay_us(2);
 	IIC_SCL_H;
-	Delay_us(5);
+	Delay_us(2);
 	IIC_SCL_L;
 }					 				     
 
 /**
- * @brief    		IIC发送一个字节
- * @param[in]   txd : 需要发送的数据
- * @date：      返回从机有无应答  1，有应答  0，无应答			
+ * @brief    		IIC·￠?íò???×??ú
+ * @param[in]   txd : Dèòa·￠?íμ?êy?Y
+ * @date￡o      ·μ??′ó?úóD?Tó|′e  1￡?óDó|′e  0￡??Tó|′e			
  */
-void IIC_Send_Byte(uint8_t txd)
+void IIC_Send_Byte(u8 txd)
 {                        
-    uint8_t t;   
+    u8 t;   
 		SDA_OUT; 	    
-    IIC_SCL_L;																																										//拉低时钟开始数据传输
+    IIC_SCL_L;																																										//à-μíê±?ó?aê?êy?Y′?ê?
     for(t=0;t<8;t++)
     {              
 																																																	//IIC_SDA=(txd&0x80)>>7;
@@ -121,35 +122,34 @@ void IIC_Send_Byte(uint8_t txd)
 		else
 			IIC_SDA_L;
 		txd<<=1; 	  
-		Delay_us(5);
+		Delay_us(2);
 		IIC_SCL_H;
-		Delay_us(5);
+		Delay_us(2);
 		IIC_SCL_L;	
-		Delay_us(5);
+		Delay_us(2);
     }	 
 } 	    
 
 /**
- * @brief    		IIC读一个字节
- * @param[in]   ack    ack=1时，发送ACK，ack=0，发送nACK   
+ * @brief    		IIC?áò???×??ú
+ * @param[in]   ack    ack=1ê±￡?·￠?íACK￡?ack=0￡?·￠?ínACK   
  */
-uint8_t IIC_Read_Byte(unsigned char ack)
+u8 IIC_Read_Byte(unsigned char ack)
 {
 	unsigned char i,receive=0;
-	SDA_IN;																																														//SDA设置为输入
+	SDA_IN;																																														//SDAéè???aê?è?
   for(i=0;i<8;i++ )
 	{
     IIC_SCL_L; 
-		Delay_us(5);
+		Delay_us(2);
 		IIC_SCL_H;
     receive<<=1;
     if(READ_SDA)receive++;   
 		Delay_us(1);
   }					 
     if (!ack)
-        IIC_NAck();																																									//发送nACK
+        IIC_NAck();																																									//·￠?ínACK
     else
-        IIC_Ack(); 																																									//发送ACK   
+        IIC_Ack(); 																																									//·￠?íACK   
     return receive;
 }
-

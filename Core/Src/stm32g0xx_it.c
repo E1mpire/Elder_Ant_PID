@@ -22,7 +22,8 @@
 #include "stm32g0xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "tim.h""
+#include "tim.h"
+#include "AS5600.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,6 +44,9 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 extern uint8_t PID_Flag;
+extern uint16_t Raw_Angle;
+extern UART_HandleTypeDef huart1;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -57,6 +61,7 @@ extern uint8_t PID_Flag;
 
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim6;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -154,6 +159,24 @@ void TIM3_IRQHandler(void)
 //HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
   PID_Flag = 1;
   /* USER CODE END TIM3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM6 global interrupt.
+  */
+void TIM6_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM6_IRQn 0 */
+
+  /* USER CODE END TIM6_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim6);
+  /* USER CODE BEGIN TIM6_IRQn 1 */
+  char buffer[100];
+    Raw_Angle = AS5600_IIC_Read_Byte((0x36<<1),0x0e);
+    float deg = Raw_Angle / 4095.0f * 360.0f;
+    int len = sprintf(buffer,"PID:%.1f\n",deg);
+    HAL_UART_Transmit(&huart1,(uint8_t*)buffer,len,4095);
+  /* USER CODE END TIM6_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
